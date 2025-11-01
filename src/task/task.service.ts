@@ -49,4 +49,10 @@ export class TaskService {
     const task = this.taskRepository.create({ title, description, state });
     return await this.taskRepository.save(task);
   }
+
+  async update(id: number, updateData: Partial<Task>): Promise<Task> {
+    const task = await this.findById(id);
+    Object.assign(task, updateData);
+    return await this.taskRepository.save(task);
+  }
 }

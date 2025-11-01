@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Put,
   UseGuards,
   Query,
   Body,
@@ -13,6 +14,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { PaginationQueryDto } from './dto/pagination.dto';
 import { CreateTaskDto } from './dto/create-task.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
 
 @ApiTags('tasks')
 @ApiBearerAuth('access-token')
@@ -41,5 +43,14 @@ export class TaskController {
       createTaskDto.description,
       createTaskDto.state,
     );
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Put(':id')
+  update(
+    @Param('id') id: number,
+    @Body() updateTaskDto: UpdateTaskDto,
+  ): Promise<Task> {
+    return this.taskService.update(id, updateTaskDto);
   }
 }
