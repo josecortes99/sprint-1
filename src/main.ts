@@ -7,6 +7,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  //Documentacion swagger
   const config = new DocumentBuilder()
     .setTitle('API de Ejemplo')
     .setDescription('Documentación de la API con Swagger y JWT')
