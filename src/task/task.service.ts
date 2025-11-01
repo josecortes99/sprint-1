@@ -55,4 +55,9 @@ export class TaskService {
     Object.assign(task, updateData);
     return await this.taskRepository.save(task);
   }
+
+  async remove(id: number): Promise<void> {
+    const task = await this.findById(id);
+    await this.taskRepository.remove(task);
+  }
 }

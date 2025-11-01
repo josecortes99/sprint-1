@@ -3,6 +3,7 @@ import {
   Get,
   Post,
   Put,
+  Delete,
   UseGuards,
   Query,
   Body,
@@ -52,5 +53,11 @@ export class TaskController {
     @Body() updateTaskDto: UpdateTaskDto,
   ): Promise<Task> {
     return this.taskService.update(id, updateTaskDto);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Delete(':id')
+  remove(@Param('id') id: number): Promise<void> {
+    return this.taskService.remove(id);
   }
 }
