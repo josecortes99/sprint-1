@@ -33,6 +33,14 @@ export class TaskService {
     };
   }
 
+  async findById(id: number): Promise<Task> {
+    const task = await this.taskRepository.findOneBy({ id });
+    if (!task) {
+      throw new NotFoundException(`Task with id ${id} not found`);
+    }
+    return task;
+  }
+
   async create(
     title: string,
     description: string,

@@ -4,7 +4,8 @@ import {
   Post,
   UseGuards,
   Query,
-  Body
+  Body,
+  Param
 } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { Task } from './entities/task.entity';
@@ -24,6 +25,12 @@ export class TaskController {
   getAll(@Query() query: PaginationQueryDto) {
     const { page, limit } = query;
     return this.taskService.findAll(page, limit);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get(':id')
+  getById(@Param('id') id: number): Promise<Task> {
+    return this.taskService.findById(id);
   }
 
   @UseGuards(AuthGuard('jwt'))
