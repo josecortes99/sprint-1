@@ -32,4 +32,13 @@ export class TaskService {
       lastPage: Math.ceil(total / limit),
     };
   }
+
+  async create(
+    title: string,
+    description: string,
+    state: string,
+  ): Promise<Task> {
+    const task = this.taskRepository.create({ title, description, state });
+    return await this.taskRepository.save(task);
+  }
 }
